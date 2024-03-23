@@ -21,8 +21,42 @@ public class Principal {
     private final String API_KEY = "6585022c";
     private final ConsumoAPI consumoAPI = new ConsumoAPI();
     private final ConverteDados conversor = new ConverteDados();
+    private List<DadosSerie> dadosSeries = new ArrayList<>();
     public void exibeMenu(){
-        System.out.println("Digite o nome da serie:");
+        var menuText = """
+                Selecione uma opção:
+                
+                1 - Buscar séries
+                2 - Buscar episódios
+                3 - Listar séries adicionadas
+                
+                0 - Sair
+                """;
+        int selectedOption = -1;
+        do{
+            System.out.println(menuText);
+            selectedOption = scanner.nextInt();
+            scanner.nextLine();
+            switch(selectedOption){
+                case 1:
+                    buscarSerieWeb();
+
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    listarSeriesAdicionadas();
+                    break;
+                case 0:
+                    System.out.println("Saindo...");
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
+                    break;
+            }
+            System.out.println("----- Fim -----");
+        }while(selectedOption!=0);
+        System.out.println("Digite o nome da serie desejada:");
         String nome = scanner.nextLine();
         var json = consumoAPI.obterDados(getURL(nome));
         DadosSerie dados = conversor.obterDados(json,DadosSerie.class);
@@ -75,6 +109,24 @@ public class Principal {
         }else{
             System.out.println("----- Episodio não encontrado! -----");
         }
+    }
+
+    private void buscarSerieWeb(){
+        System.out.println("Digite o nome da serie desejada:");
+        String nome = scanner.nextLine();
+        var json = consumoAPI.obterDados(getURL(nome));
+        DadosSerie dados = conversor.obterDados(json,DadosSerie.class);
+        dadosSeries.add(dados);
+        System.out.println("\""+dados.titulo()+"\" adicionada com sucesso!");
+    }
+
+    private void listarSeriesAdicionadas(){
+        System.out.println("----- Séries adicionadas -----");
+        if(dadosSeries.isEmpty()){
+            System.out.println("Não há séries na lista.");
+            return;
+        }
+        dadosSeries.forEach(dados-> System.out.println(dados.titulo()));
     }
 
     private String getURL(String nome){
