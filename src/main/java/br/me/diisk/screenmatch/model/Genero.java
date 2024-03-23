@@ -4,10 +4,13 @@ import java.util.Arrays;
 
 public enum Genero {
     ACAO("Action"),
-    ROMANCE("Romance"),
+    AVENTURA("Adventure"),
     COMEDIA("Comedy"),
-    DRAMA("Drama"),
     CRIME("Crime"),
+    DRAMA("Drama"),
+    FANTASIA("Fantasy"),
+    ROMANCE("Romance"),
+    TERROR("Horror"),
     ;
 
     private String generoOmdb;

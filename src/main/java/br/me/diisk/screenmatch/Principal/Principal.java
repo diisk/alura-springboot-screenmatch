@@ -1,9 +1,6 @@
 package br.me.diisk.screenmatch.Principal;
 
-import br.me.diisk.screenmatch.model.DadosEpisodio;
-import br.me.diisk.screenmatch.model.DadosSerie;
-import br.me.diisk.screenmatch.model.DadosTemporada;
-import br.me.diisk.screenmatch.model.Episodio;
+import br.me.diisk.screenmatch.model.*;
 import br.me.diisk.screenmatch.service.ConsumoAPI;
 import br.me.diisk.screenmatch.service.ConverteDados;
 
@@ -115,7 +112,11 @@ public class Principal {
         System.out.println("Digite o nome da serie desejada:");
         String nome = scanner.nextLine();
         var json = consumoAPI.obterDados(getURL(nome));
-        DadosSerie dados = conversor.obterDados(json,DadosSerie.class);
+        DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
+        if(dados.titulo()==null){
+            System.out.println("\""+nome+"\" não encontrado.");
+            return;
+        }
         dadosSeries.add(dados);
         System.out.println("\""+dados.titulo()+"\" adicionada com sucesso!");
     }
@@ -126,7 +127,7 @@ public class Principal {
             System.out.println("Não há séries na lista.");
             return;
         }
-        dadosSeries.forEach(dados-> System.out.println(dados.titulo()));
+        dadosSeries.stream().map(Serie::new).forEach(System.out::println);
     }
 
     private String getURL(String nome){
