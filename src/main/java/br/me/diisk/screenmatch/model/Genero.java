@@ -1,6 +1,7 @@
 package br.me.diisk.screenmatch.model;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 public enum Genero {
     ACAO("Action"),
@@ -11,6 +12,7 @@ public enum Genero {
     FANTASIA("Fantasy"),
     ROMANCE("Romance"),
     TERROR("Horror"),
+    MISTERIO("Mystery"),
     ;
 
     private String generoOmdb;
@@ -19,13 +21,13 @@ public enum Genero {
         this.generoOmdb = generoOmdb;
     }
 
-    public static Genero fromPortugues(String text) {
+    public static Optional<Genero> fromPortugues(String text) {
         for (Genero categoria : Genero.values()) {
             if (categoria.name().equalsIgnoreCase(text)) {
-                return categoria;
+                return Optional.of(categoria);
             }
         }
-        throw new IllegalArgumentException("Nenhuma categoria encontrada para a string fornecida: " + text);
+        return Optional.empty();
     }
 
     public static Genero getByOmdbName(String text){
