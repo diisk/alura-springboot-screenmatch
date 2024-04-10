@@ -18,26 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
-public class ScreenmatchApplication implements CommandLineRunner {
-
-	@Autowired
-	private SerieRepository repositorio;
-
-	@Value("${spring.datasource.url}") // Replace "your.property.name" with the actual property name
-	private String propertyValue;
+public class ScreenmatchApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ScreenmatchApplication.class, args);
 	}
 
-	@Override
-	public void run(String... args) throws Exception {
-		System.out.println(propertyValue);
-
-
-		Principal principal = new Principal(repositorio);
-		principal.exibeMenu();
-
-
-	}
 }
