@@ -1,5 +1,6 @@
 package br.me.diisk.screenmatch.repository;
 
+import br.me.diisk.screenmatch.model.Episodio;
 import br.me.diisk.screenmatch.model.Genero;
 import br.me.diisk.screenmatch.model.Serie;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +19,7 @@ public interface SerieRepository extends JpaRepository<Serie, Long> {
 
     @Query("select s from Serie s WHERE s.totalTemporadas <= :totalTemporadas AND s.avaliacao >= :avaliacao")
     List<Serie> seriesPorTemporadaAvaliacao(Integer totalTemporadas, double avaliacao);
+
+    @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE s.id = :id AND e.temporada = :numero")
+    List<Episodio> obterEpisodiosPorTemporada(Long id, Long numero);
 }
